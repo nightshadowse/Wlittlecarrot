@@ -66,7 +66,7 @@
 </div>
 
 <div id="video-container">
-  <video id="videoPlayer" autoplay muted></video>
+  <video id="videoPlayer" controls></video>
 </div>
 
 <audio id="errorSound" src="https://www.soundjay.com/button/sounds/beep-10.mp3"></audio>
@@ -110,13 +110,14 @@ yesBtn.addEventListener("click", () => {
 
   // Show video
   videoPlayer.src = videos[videoIndex];
+  videoPlayer.play(); // autoplay with sound
   videoContainer.style.display = "block";
 
-  // Hide after 3 seconds
-  setTimeout(() => {
+  // Hide video after it ends
+  videoPlayer.onended = () => {
     videoContainer.style.display = "none";
     videoPlayer.src = "";
-  }, 3000);
+  }
 
   // Next video
   videoIndex = (videoIndex + 1) % videos.length;
