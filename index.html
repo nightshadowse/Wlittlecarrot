@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Little Carrot</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #0d1117;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #question-box {
+    background-color: #1f2937;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    position: absolute;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+  }
+
+  #video-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+
+  video {
+    width: 320px;
+    border-radius: 12px;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #1d4ed8;
+  }
+</style>
+</head>
+<body>
+
+<div id="question-box">
+  <h2>Are you still upset because your phone broke?</h2>
+  <button id="yesBtn">Yes</button>
+  <button id="noBtn">I feel better</button>
+</div>
+
+<div id="video-container">
+  <video id="videoPlayer" controls></video>
+</div>
+
+<audio id="errorSound" src="https://www.soundjay.com/button/sounds/beep-10.mp3"></audio>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const box = document.getElementById("question-box");
+const videoContainer = document.getElementById("video-container");
+const videoPlayer = document.getElementById("videoPlayer");
+const errorSound = document.getElementById("errorSound");
+
+// Videoların listesi
+const videos = ["video1.mp4", "video2.mp4", "video3.mp4"];
+let videoIndex = 0;
+
+// Rastgele renk
+function getRandomColor() {
+  return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+// Yes buton tıklandığında
+yesBtn.addEventListener("click", () => {
+  // Sesli uyarı
+  errorSound.currentTime = 0;
+  errorSound.play();
+
+  // Kutuyu rastgele konuma taşı ve renklendir
+  const randomX = Math.random() * (window.innerWidth - 300);
+  const randomY = Math.random() * (window.innerHeight - 150);
+  box.style.left = `${randomX}px`;
+  box.style.top = `${randomY}px`;
+  box.style.backgroundColor = getRandomColor();
+
+  // Videoyu göster ve oynat
+  videoPlayer.src = videos[videoIndex];
+  videoPlayer.play();
+  videoContainer.style.display = "block";
+
+  // Video bitince gizle
+  videoPlayer.onended = () => {
+    videoContainer.style.display = "none";
+    videoPlayer.src = "";
+  };
+
+  // Sıradaki video
+  videoIndex = (videoIndex + 1) % videos.length;
+});
+
+// I feel better buton tıklandığında
+noBtn.addEventListener("click", () => {
+  box.style.display = "none";
+  const resultDiv = document.createElement("div");
+  resultDiv.style.textAlign = "center";
+  resultDiv.innerHTML = `
+    <h2>I knew you were a strong woman 💪</h2>
+  `;
+  document.body.appendChild(resultDiv);
+});
+</script>
+
+</body>
+</html>
