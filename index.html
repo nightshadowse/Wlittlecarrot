@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Question</title>
+<title>Welcome Little Carrot</title>
 <style>
   body {
     background-color: #0d1117;
@@ -79,16 +79,11 @@ const videoContainer = document.getElementById("video-container");
 const videoPlayer = document.getElementById("videoPlayer");
 const errorSound = document.getElementById("errorSound");
 
-// Replace these links with GitHub Pages links for your MP4 videos
-const videos = [
-  "video3.mp4",
-  "https://yourusername.github.io/repo/video2.mp4",
-  "https://yourusername.github.io/repo/video3.mp4"
-];
-
+// Video list
+const videos = ["video1.mp4","video2.mp4","video3.mp4"];
 let videoIndex = 0;
 
-// Random color for movement
+// Random color for box
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -104,7 +99,7 @@ yesBtn.addEventListener("click", () => {
   errorSound.currentTime = 0;
   errorSound.play();
 
-  // Move and change color of box
+  // Move and recolor box
   const randomX = Math.random() * (window.innerWidth - 300);
   const randomY = Math.random() * (window.innerHeight - 150);
   box.style.left = `${randomX}px`;
@@ -136,9 +131,6 @@ noBtn.addEventListener("click", () => {
     resultDiv.style.textAlign = "center";
     resultDiv.innerHTML = `
       <h2>I knew you were a strong woman 💪</h2>
-      <video autoplay loop muted width="320" style="border-radius:12px;">
-        <source src="${videos[0]}" type="video/mp4">
-      </video>
     `;
     document.body.appendChild(resultDiv);
   }, 600);
